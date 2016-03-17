@@ -4,6 +4,7 @@
   "description": "setAsap - async variable call control",
   "main": "src/set-asap.js",
   "scripts": {
+    "postversion": "git push origin master && git push origin --tags",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
