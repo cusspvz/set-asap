@@ -1,6 +1,6 @@
 {
   "name": "set-asap",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "setAsap - async variable call control",
   "main": "src/set-asap.js",
   "scripts": {
