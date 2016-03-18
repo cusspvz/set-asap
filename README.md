@@ -65,10 +65,12 @@ Examples:
 - `setTimeout`
 - `setInterval`
 
-### Why did you bring this up?
+### Why did you brought this up?
 
-**Javascript** doesn't always have great performance on all engines, thats a fact,
-specially on browsers where they have to update the UI on the same JS process.
+**Javascript** doesn't always have great performance on all engines, thats a fact.
+(V8 Rockkkssss, hell yeah)
+Specially on browsers, since they have to share the same JS process with the DOM
+rendering/draw.
 
 Besides, **Javascript** is meant to be non-blocking IO driven but if you fill
 up the next tick stack it will act as IO blocking.
@@ -79,15 +81,19 @@ Under the hood, timer async methods just place up the function provided by the
 developer at the end of an array.
 
 When the engine has nothing to do, it just picks up the first one that is
-eligible to run and starts its execution, if that execution or more of them calls
-up more, you will end up filling the next stack, resulting in a blocking IO.
+eligible to run and starts its execution, thats also why `setTimeout` and
+`setInterval` calls doesn't have 100% time accuracy.
 
-### And whats bad on filling up the next stack?
+If the current execution or the others holding on stack are meant to call up
+more, you will ending up filling the next tick stack, resulting in a blocking
+IO scenario.
+
+### And whats bad on filling up the next tick stack?
 
 #### On Node.JS
 If you fill up your **next tick stack** and it is serving an HTTP service, the
 server will take longer to start handling new requests, because it uses the
-that stack.
+the same timer methods.
 
 #### Browser
 Browsers use Javascript to handle UI redrawing, which means that if you block
@@ -107,6 +113,9 @@ while ( 1 ) {}
 })()
 ```
 
+<img src="http://g.recordit.co/P88YayHz01.gif" />
+
+
 ### How does this fixes this issue?
 
 You won't block the IO, you don't want to, but it could happen whenever your
@@ -118,7 +127,7 @@ This method allows the engine to handle other resources on the spare time.
 
 ### Could you please represent it on a graphical way?
 
-If you meant terminal graphicall way, yes.
+If you meant terminal way, yes. =D
 
 
 #### Legend:
@@ -130,12 +139,41 @@ Imagine a case where I want to fill 8 executions on the next second:
 
 #### Case with `setImmediate`
 
+```js
+for ( var i = 0; i < 9; i++ ) {
+  setImmediate( () => null )
+}
 ```
-12345678----------------------
+
+```
+123456789---------------------
+```
+
+#### Case with `setTimeout`
+
+```js
+for ( var i = 0; i < 9; i++ ) {
+  setTimeout( () => null, 500 )
+}
+```
+
+```
+--------------123456789------
 ```
 
 #### Case with `setAsap`
 
+```js
+for ( var i = 0; i < 9; i++ ) {
+  setAsap( () => null, 1000, 50 )
+}
+```
+
 ```
 ---71--4--5-----9-6---2--3--8-
 ```
+
+## License
+
+Available throught the GPL-3.0 LICENSE.
+Copyright (C) 2016 - [José Moreira](https://github.com/cusspvz)
