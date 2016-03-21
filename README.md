@@ -1,8 +1,10 @@
 # set-asap
 
+[![npm version](https://badge.fury.io/js/set-asap.svg)](https://badge.fury.io/js/set-asap)
+
 async variable call control
 
-A replacement for your `setImmediate` calls.
+A replacement for your `setImmediate` / `setTimeout` calls.
 
 ## Installation
 
@@ -135,12 +137,12 @@ If you meant terminal way, yes. =D
 * `[number]` - execution
 * `[char]` - each character means a tick
 
-Imagine a case where I want to fill 8 executions on the next second:
+Imagine a case where I want to fill 9 executions on the next second:
 
 #### Case with `setImmediate`
 
 ```js
-for ( var i = 0; i < 9; i++ ) {
+for ( var i = 1; i <= 9; i++ ) {
   setImmediate( () => null )
 }
 ```
@@ -152,7 +154,7 @@ for ( var i = 0; i < 9; i++ ) {
 #### Case with `setTimeout`
 
 ```js
-for ( var i = 0; i < 9; i++ ) {
+for ( var i = 1; i <= 9; i++ ) {
   setTimeout( () => null, 500 )
 }
 ```
@@ -164,7 +166,7 @@ for ( var i = 0; i < 9; i++ ) {
 #### Case with `setAsap`
 
 ```js
-for ( var i = 0; i < 9; i++ ) {
+for ( var i = 1; i <= 9; i++ ) {
   setAsap( () => null, 1000, 50 )
 }
 ```
