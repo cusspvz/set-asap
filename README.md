@@ -122,7 +122,7 @@ while ( 1 ) {}
 
 You won't block the IO, you don't want to, but it could happen whenever your
 code has lot of things to handle, this method is a mixture between the
-`setImmediate` and `setInterval`, but instead of a fixed timing, it places your
+`setImmediate` and `setTimeout`, but instead of a fixed timing, it places your
 call in a dynamic window without respecting priority.
 
 This method allows the engine to handle other resources on the spare time.
